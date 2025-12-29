@@ -3,16 +3,15 @@ import type { SearchFunction } from '../types'
 
 export const search: SearchFunction = async({  artist, title }) => {
     const response = await fetch({
-        url: `https://deezer.com/search/${artist} ${title}/album`,
+        url: `https://api.deezer.com/search/album`,
         method: 'GET',
+        urlParameters: {
+            q: `artist:"${artist}" album:"${title}"`
+        },
     })
+    const data = typeof response === 'string' ? JSON.parse(response) : response
 
-    const html = new DOMParser().parseFromString(response, 'text/html')
-    const topResult = html.querySelector('[data-testid="album_thumbnail"]')
-    if (!topResult) {
-        return undefined
-    }
-
-    const url = topResult.querySelector('a')?.href
-    return url ?? undefined
+    const album = data?.data?.[0]
+    
+    return album ? album.link : undefined
 }
