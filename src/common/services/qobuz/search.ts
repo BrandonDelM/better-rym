@@ -3,20 +3,16 @@ import type { SearchFunction } from '../types'
 
 export const search: SearchFunction = async({  artist, title }) => {
     const response = await fetch({
-        url: `https://tidal.com/us-en/search/albums/${artist} ${title}`,
+        url: `https://tidal.com/search/${artist} ${title}/album`,
         method: 'GET',
     })
 
     const html = new DOMParser().parseFromString(response, 'text/html')
-    const topResult = html.querySelector('.ReleaseCard')
+    const topResult = html.querySelector('[data-testid="album_thumbnail"]')
     if (!topResult) {
         return undefined
     }
 
     const url = topResult.querySelector('a')?.href
-    
-    const album_id = url?.substring(url?.lastIndexOf('/'))
-    const streaming_url = `https://open.qobuz.com/album${album_id}`
-
-    return streaming_url ?? undefined
+    return url ?? undefined
 }
