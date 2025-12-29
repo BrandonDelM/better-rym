@@ -8,7 +8,7 @@ import { search } from './search'
 export const Qobuz: Service & Searchable = {
     id: 'qobuz',
     name: 'Qobuz',
-    regex: /https?:\/\/.*\.qobuz\.com\/album\/.*/,
+    regex: /https?:\/\/open\.qobuz\.com\/album\//,
     icon: QobuzIcon,
     foundIcon: QobuzFoundIcon,
     notFoundIcon: QobuzNotFoundIcon,

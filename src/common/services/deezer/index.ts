@@ -8,7 +8,7 @@ import { search } from './search'
 export const Deezer: Service & Searchable = {
     id: 'deezer',
     name: 'Deezer',
-    regex: /https?:\/\/.*\.deezer\.com\/album\/.*/,
+    regex: /https?:\/\/www.deezer\.com\/album\/.*/,
     icon: DeezerIcon,
     foundIcon: DeezerFoundIcon,
     notFoundIcon: DeezerNotFoundIcon,
