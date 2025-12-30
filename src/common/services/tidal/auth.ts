@@ -5,9 +5,10 @@ const client_id = import.meta.env.VITE_TIDAL_ID as string
 const client_secret = import.meta.env.VITE_TIDAL_SECRET as string
 
 export const requestToken = async (): Promise<TokenResponse> => {
+
   const response = await fetch({
     method: 'POST',
-    url: 'https://auth.tidal.com/v1/oauth2/token',
+    url: `https://auth.tidal.com/v1/oauth2/token`,
     urlParameters: {
       grant_type: 'client_credentials',
       client_id: client_id,
@@ -19,5 +20,9 @@ export const requestToken = async (): Promise<TokenResponse> => {
   })
 
   const data = typeof response === 'string' ? JSON.parse(response) : response
-  return data as unknown as TokenResponse
+
+  if (!data.access_token) {
+    throw new Error('Failed to get access token')
+  }
+  return data as TokenResponse
 }
